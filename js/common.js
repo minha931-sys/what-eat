@@ -6,11 +6,30 @@ const appConfig = {
   description: "오늘 뭐 먹을지 고민될 때 오늘의 메뉴 추천, 냉장고 털이, 칼로리 계산, 요리백과를 한곳에서 사용하는 식사 도구입니다."
 };
 
+const staticRecipePages = {
+  "budae-jjigae": "recipes/budae-jjigae.html",
+  "kimchi-fried-rice": "recipes/kimchi-fried-rice.html",
+  "jeyuk-bokkeum": "recipes/jeyuk-bokkeum.html",
+  "sundubu-jjigae": "recipes/sundubu-jjigae.html",
+  "tuna-mayo-rice": "recipes/tuna-mayo-rice.html",
+  "egg-soy-rice": "recipes/egg-soy-rice.html",
+  "spam-mayo-rice": "recipes/spam-mayo-rice.html",
+  "egg-ramen": "recipes/egg-ramen.html",
+  "cheese-ramen": "recipes/cheese-ramen.html",
+  "basic-doenjang-jjigae": "recipes/basic-doenjang-jjigae.html",
+  "tofu-kimchi": "recipes/tofu-kimchi.html",
+  "kimchi-jeon": "recipes/kimchi-jeon.html",
+  "microwave-egg-custard": "recipes/microwave-egg-custard.html",
+  "eomuk-tang": "recipes/eomuk-tang.html",
+  "tteok-mandu-guk": "recipes/tteok-mandu-guk.html"
+};
+
 document.addEventListener("DOMContentLoaded", applySiteConfig);
 
 function applySiteConfig() {
   const pageTitle = document.body.dataset.pageTitle || appConfig.pageTitle;
-  const fullTitle = `${appConfig.siteName} - ${pageTitle}`;
+  const existingTitle = document.querySelector("title")?.textContent.trim();
+  const fullTitle = existingTitle || `${appConfig.siteName} - ${pageTitle}`;
   const pageDescription = document.body.dataset.pageDescription
     || getMetaContent("description")
     || appConfig.description;
@@ -48,9 +67,31 @@ function getMetaContent(name) {
 }
 
 function getAssetPath(path) {
-  const depth = window.location.pathname.includes("/articles/") ? "../" : "";
+  const isNestedPage = window.location.pathname.includes("/articles/")
+    || window.location.pathname.includes("/recipes/");
+  const depth = isNestedPage ? "../" : "";
 
   return `${depth}${path}`;
+}
+
+function getStaticRecipePage(recipeId) {
+  const page = staticRecipePages[recipeId];
+
+  if (!page) {
+    return "";
+  }
+
+  return getAssetPath(page);
+}
+
+function renderRecipeDetailAction(recipeId, dataAttribute = "data-recipe-id") {
+  const page = getStaticRecipePage(recipeId);
+
+  if (page) {
+    return `<a class="utility-button recipe-detail-button" href="${page}">상세 보기</a>`;
+  }
+
+  return `<button class="utility-button recipe-detail-button" type="button" ${dataAttribute}="${recipeId}">상세 보기</button>`;
 }
 
 function getTopicParticle(text) {

@@ -1,4 +1,5 @@
-const storageKey = "naengteol-selected-ingredients";
+const storageKey = "whateat-selected-ingredients";
+const legacyStorageKey = "naengteol-selected-ingredients";
 
 const ingredientGroups = [
   {
@@ -110,7 +111,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function loadSavedIngredients() {
   try {
-    return (JSON.parse(localStorage.getItem(storageKey)) || [])
+    const savedIngredients = localStorage.getItem(storageKey) || localStorage.getItem(legacyStorageKey);
+
+    return (JSON.parse(savedIngredients) || [])
       .filter((ingredient) => !["물", "냉동야채"].includes(ingredient));
   } catch (error) {
     return [];
@@ -119,6 +122,7 @@ function loadSavedIngredients() {
 
 function saveIngredients() {
   localStorage.setItem(storageKey, JSON.stringify([...selectedIngredients]));
+  localStorage.removeItem(legacyStorageKey);
 }
 
 function renderIngredientButtons() {
@@ -402,7 +406,10 @@ function hasIngredient(ingredient) {
 
 function sortMatches(matches) {
   return matches.sort((a, b) => {
-    const tieBreaker = difficultyScore(a.recipe.difficulty) - difficultyScore(b.recipe.difficulty)
+    const popularTieBreaker = Number(isPopularRecipe(b.recipe.id)) - Number(isPopularRecipe(a.recipe.id));
+    const tieBreaker = popularTieBreaker
+      || b.recipe.ingredients.length - a.recipe.ingredients.length
+      || difficultyScore(a.recipe.difficulty) - difficultyScore(b.recipe.difficulty)
       || dishScore(a.recipe.dishLevel) - dishScore(b.recipe.dishLevel)
       || a.recipe.time - b.recipe.time
       || a.recipe.name.localeCompare(b.recipe.name, "ko");
@@ -422,8 +429,12 @@ function sortMatches(matches) {
         || a.recipe.name.localeCompare(b.recipe.name, "ko");
     }
 
-    return a.recipe.time - b.recipe.time || tieBreaker;
+    return tieBreaker;
   });
+}
+
+function isPopularRecipe(recipeId) {
+  return Boolean(getStaticRecipePage(recipeId));
 }
 
 function updateResults() {
@@ -489,7 +500,7 @@ function renderRecipeCard(match) {
       <div class="recipe-detail">
         <p><strong>필수 재료</strong> ${recipe.ingredients.join(", ")}</p>
         <div class="button-cloud">${recipe.tags.map((tag) => `<span class="tag">#${tag}</span>`).join("")}</div>
-        <button class="utility-button recipe-detail-button" type="button" data-recipe-id="${recipe.id}">상세 보기</button>
+        ${renderRecipeDetailAction(recipe.id)}
       </div>
     </article>
   `;
@@ -565,6 +576,7 @@ function resetSelections() {
   selectedSort = "default";
   sortSelectEl.value = selectedSort;
   localStorage.removeItem(storageKey);
+  localStorage.removeItem(legacyStorageKey);
 
   document.querySelectorAll(".chip.is-selected").forEach((button) => {
     button.classList.remove("is-selected");

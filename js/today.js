@@ -6,9 +6,14 @@ const todayResultCountEl = document.querySelector("#todayResultCount");
 const todayResultLabelEl = document.querySelector("#todayResultLabel");
 const todayResultsEl = document.querySelector("#todayResults");
 const todayEmptyEl = document.querySelector("#todayEmpty");
+const todayMoreBtnEl = document.querySelector("#todayMoreBtn");
 const todayRecipeModalEl = document.querySelector("#todayRecipeModal");
 const todayModalContentEl = document.querySelector("#todayModalContent");
 const todayModalCloseBtnEl = document.querySelector("#todayModalCloseBtn");
+const initialTodayResultCount = 3;
+const todayResultPageSize = 10;
+let todayRecommendedItems = [];
+let todayVisibleCount = initialTodayResultCount;
 
 const todayOptions = {
   mealTime: [
@@ -62,6 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
   todaySurveyEl.addEventListener("click", handleSurveyClick);
   todayRecommendBtnEl.addEventListener("click", recommendTodayMenu);
   todayResetBtnEl.addEventListener("click", resetTodayMenu);
+  todayMoreBtnEl.addEventListener("click", showMoreTodayResults);
   todayResultsEl.addEventListener("click", handleTodayDetailClick);
   todayModalCloseBtnEl.addEventListener("click", closeTodayModal);
   todayRecipeModalEl.addEventListener("click", (event) => {
@@ -119,20 +125,35 @@ function recommendTodayMenu() {
     .map((recipe) => scoreRecipe(recipe))
     .sort((a, b) => b.score - a.score || a.recipe.time - b.recipe.time || a.recipe.name.localeCompare(b.recipe.name, "ko"));
   const matches = scored.filter((item) => item.score > 0);
-  const displayItems = matches.length > 0
-    ? [...matches, ...scored.filter((item) => item.score === 0)].slice(0, 3)
-    : scored.slice(0, 3);
+  todayRecommendedItems = matches;
+  todayVisibleCount = initialTodayResultCount;
 
-  todayResultCountEl.textContent = `${displayItems.length}개`;
-  todayResultLabelEl.textContent = displayItems.length;
   todayEmptyEl.hidden = !(matches.length === 0 && hasAnySelection());
-  todayResultsEl.innerHTML = displayItems.map(renderTodayCard).join("");
 
   if (matches.length === 0) {
-    todayEmptyEl.textContent = "조건이 조금 빡빡해서 비슷한 메뉴도 함께 보여드려요.";
+    todayEmptyEl.textContent = hasAnySelection()
+      ? "선택한 조건에 맞는 추천 메뉴가 없어요. 조건을 조금 줄여보세요."
+      : "조건을 하나 이상 고른 뒤 메뉴 추천받기를 눌러보세요.";
   } else {
     todayEmptyEl.textContent = "조건을 고른 뒤 메뉴 추천받기를 눌러보세요.";
   }
+
+  renderTodayResults();
+}
+
+function showMoreTodayResults() {
+  todayVisibleCount += todayResultPageSize;
+  renderTodayResults();
+}
+
+function renderTodayResults() {
+  const displayItems = todayRecommendedItems.slice(0, todayVisibleCount);
+
+  todayResultCountEl.textContent = `${displayItems.length}개`;
+  todayResultLabelEl.textContent = displayItems.length;
+  todayResultsEl.innerHTML = displayItems.map(renderTodayCard).join("");
+  todayMoreBtnEl.hidden = displayItems.length >= todayRecommendedItems.length;
+  todayMoreBtnEl.textContent = `더보기 (${Math.min(todayResultPageSize, todayRecommendedItems.length - displayItems.length)}개)`;
 }
 
 function hasAnySelection() {
@@ -170,7 +191,7 @@ function scoreRecipe(recipe) {
   if (todayState.recipeType !== "all") {
     const recipeType = getRecipeType(recipe);
     if (recipeType === todayState.recipeType) {
-      score += 4;
+      score += 8;
       reasons.push(`${recipeType} 타입`);
     }
   }
@@ -311,14 +332,13 @@ function matchCalorie(recipe, value) {
 }
 
 function renderTodayCard(item) {
-  const { recipe, score, reasons } = item;
+  const { recipe, reasons } = item;
   const type = getRecipeType(recipe);
 
   return `
     <article class="recipe-card today-card">
       <div class="recipe-top">
         <h3>${recipe.name}</h3>
-        <span class="badge ready">${score}점</span>
       </div>
       <div class="meta-list">
         <span>${type}</span>
@@ -329,7 +349,7 @@ function renderTodayCard(item) {
         <p><strong>추천 이유</strong> ${reasons.join(", ") || "현재 선택과 잘 맞는 메뉴"}</p>
         <p><strong>필수 재료</strong> ${recipe.ingredients.join(", ")}</p>
         <div class="button-cloud">${recipe.tags.map((tag) => `<span class="tag">#${tag}</span>`).join("")}</div>
-        <button class="utility-button recipe-detail-button" type="button" data-today-recipe-id="${recipe.id}">상세 보기</button>
+        ${renderRecipeDetailAction(recipe.id, "data-today-recipe-id")}
       </div>
     </article>
   `;
@@ -396,6 +416,9 @@ function resetTodayMenu() {
   todayResultCountEl.textContent = "0개";
   todayResultLabelEl.textContent = "0";
   todayResultsEl.innerHTML = "";
+  todayRecommendedItems = [];
+  todayVisibleCount = initialTodayResultCount;
+  todayMoreBtnEl.hidden = true;
   todayEmptyEl.hidden = false;
   todayEmptyEl.textContent = "조건을 고른 뒤 메뉴 추천받기를 눌러보세요.";
 }

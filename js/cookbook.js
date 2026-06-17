@@ -77,7 +77,7 @@ function renderCookbookCard(recipe) {
         <p><strong>필수 재료</strong> ${recipe.ingredients.join(", ")}</p>
         <p><strong>사용 도구</strong> ${recipe.tools.join(", ")}</p>
         <div class="button-cloud">${recipe.tags.map((tag) => `<span class="tag">#${tag}</span>`).join("")}</div>
-        <button class="utility-button recipe-detail-button" type="button" data-recipe-id="${recipe.id}">상세 보기</button>
+        ${renderRecipeDetailAction(recipe.id)}
       </div>
     </article>
   `;

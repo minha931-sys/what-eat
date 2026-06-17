@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
@@ -7,10 +7,30 @@
   <meta property="og:title" content="whatEat - 오늘의 메뉴 추천">
   <meta property="og:description" content="지금 먹고 싶은 상황을 고르면 오늘 먹기 좋은 메뉴를 추천합니다.">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="https://www.whateat.kr/images/31806508-742a-415a-adc9-778cb3718a38.jpg">
+  <meta property="og:image" content="https://whateat.kr/images/31806508-742a-415a-adc9-778cb3718a38.jpg">
   <meta property="og:image:alt" content="whatEat 로고">
   <title>whatEat - 오늘의 메뉴 추천</title>
+  <link rel="canonical" href="https://whateat.kr/today.html">
   <link rel="icon" href="images/whatEat-logo-header-new.jpg" type="image/jpeg">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "whatEat 오늘의 메뉴 추천",
+      "url": "https://whateat.kr/today.html",
+      "applicationCategory": "LifestyleApplication",
+      "operatingSystem": "Web",
+      "description": "시간대와 기분, 조리 조건을 고르면 오늘 먹기 좋은 메뉴를 추천하는 도구입니다.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "KRW"
+      },
+      "inLanguage": "ko-KR"
+    }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5944689754824076"
+     crossorigin="anonymous"></script>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body data-page-title="오늘의 메뉴 추천">
@@ -89,6 +109,9 @@
           <span id="todayResultLabel" class="count-pill">0</span>
         </div>
         <div id="todayResults" class="recipe-grid"></div>
+        <div class="show-more-row">
+          <button id="todayMoreBtn" class="utility-button" type="button" hidden>더보기</button>
+        </div>
         <p id="todayEmpty" class="empty-message">
           조건을 고른 뒤 메뉴 추천받기를 눌러보세요.
         </p>
