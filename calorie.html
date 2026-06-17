@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="밥, 라면, 집밥 메뉴, 자취 요리의 예상 칼로리를 검색하고 더해 한 끼 식사 칼로리를 계산할 수 있는 whatEat 칼로리 계산기입니다.">
+  <meta property="og:title" content="whatEat | 칼로리 계산기">
+  <meta property="og:description" content="밥, 라면, 집밥 메뉴, 자취 요리의 예상 칼로리를 검색하고 더해 한 끼 식사 칼로리를 계산할 수 있는 whatEat 칼로리 계산기입니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://www.whateat.kr/images/31806508-742a-415a-adc9-778cb3718a38.jpg">
+  <meta property="og:image:alt" content="whatEat 로고">
+  <title>whatEat | 칼로리 계산기</title>
+  <link rel="icon" href="images/whatEat-logo-header-new.jpg" type="image/jpeg">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page-title="칼로리 계산기">
+  <header class="site-header">
+    <div class="container header-inner">
+      <a id="siteLogo" class="logo" href="index.html" aria-label="홈"></a>
+      <nav class="header-nav" aria-label="주요 기능">
+        <a href="fridge.html">냉장고 털이</a>
+        <a href="today.html">오늘의 메뉴 추천</a>
+        <a class="is-active" href="calorie.html">칼로리 계산기</a>
+        <a href="cookbook.html">요리백과</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section id="calorieCalculator" class="tool-section page-hero">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">기능 2</span>
+          <h1>칼로리 계산기</h1>
+          <p>밥, 라면, 김치볶음밥, 부대찌개, 제육볶음처럼 자주 먹는 음식의 예상 칼로리를 더해 한 끼 식사 칼로리를 계산해보세요. 자취 요리와 집밥 메뉴의 대략적인 열량을 빠르게 확인할 수 있습니다.</p>
+        </div>
+        <div class="calculator-panel">
+          <div class="calculator-search">
+            <label for="calorieSearch">검색</label>
+            <div class="calculator-search-box">
+              <input id="calorieSearch" type="search" placeholder="요리명이나 재료를 입력하세요">
+              <span id="calorieOptionCount">0개</span>
+            </div>
+            <div id="calorieSearchResults" class="calorie-search-results" aria-label="음식 검색 결과"></div>
+          </div>
+          <div class="calculator-form">
+            <div class="selected-calorie-food">
+              <span>선택한 음식</span>
+              <strong id="selectedCalorieFoodName">음식을 선택해주세요</strong>
+            </div>
+            <label for="calorieAmount">분량</label>
+            <input id="calorieAmount" type="number" min="0.25" step="0.25" value="1">
+            <button id="addCalorieBtn" class="utility-button accent" type="button">추가</button>
+          </div>
+          <div class="calorie-total">
+            <span>예상 총 칼로리</span>
+            <strong id="calorieTotal">0kcal</strong>
+          </div>
+          <div id="calorieItems" class="calorie-items"></div>
+          <p id="calorieEmpty" class="empty-message">음식을 추가하면 계산 결과가 여기에 표시됩니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="about-section">
+      <div class="container about-panel">
+        <h2>자주 찾는 음식 칼로리</h2>
+        <ul>
+          <li>밥 1공기: 약 310kcal</li>
+          <li>라면 1봉: 약 500kcal</li>
+          <li>계란 1개: 약 80kcal</li>
+          <li>김치볶음밥: 약 520kcal</li>
+          <li>부대찌개: 약 880kcal</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="about-section">
+      <div class="container about-panel">
+        <h2>칼로리 계산기는 어떻게 쓰나요?</h2>
+        <ul>
+          <li>음식 이름이나 재료를 검색합니다.</li>
+          <li>먹을 분량을 입력하고 추가합니다.</li>
+          <li>여러 음식을 더해 한 끼 예상 칼로리를 확인합니다.</li>
+          <li>표시되는 칼로리는 조리법과 제품에 따라 달라질 수 있습니다.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span>© whatEat</span>
+      <nav aria-label="운영 안내">
+        <a href="privacy.html">개인정보처리방침</a>
+        <a href="terms.html">이용약관</a>
+        <a href="contact.html">문의</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="js/recipes.js"></script>
+  <script src="js/recipes-extra.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/calorie.js"></script>
+</body>
+</html>

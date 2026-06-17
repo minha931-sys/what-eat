@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="자취 요리, 집밥 메뉴, 냉장고 털이 레시피를 이름, 재료, 조리시간, 태그로 검색할 수 있는 whatEat 요리백과입니다.">
+  <meta property="og:title" content="whatEat | 요리백과">
+  <meta property="og:description" content="자취 요리, 집밥 메뉴, 냉장고 털이 레시피를 이름, 재료, 조리시간, 태그로 검색할 수 있는 whatEat 요리백과입니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://www.whateat.kr/images/31806508-742a-415a-adc9-778cb3718a38.jpg">
+  <meta property="og:image:alt" content="whatEat 로고">
+  <title>whatEat | 요리백과</title>
+  <link rel="icon" href="images/whatEat-logo-header-new.jpg" type="image/jpeg">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page-title="요리백과">
+  <header class="site-header">
+    <div class="container header-inner">
+      <a id="siteLogo" class="logo" href="index.html" aria-label="홈"></a>
+      <nav class="header-nav" aria-label="주요 기능">
+        <a href="fridge.html">냉장고 털이</a>
+        <a href="today.html">오늘의 메뉴 추천</a>
+        <a href="calorie.html">칼로리 계산기</a>
+        <a class="is-active" href="cookbook.html">요리백과</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section id="cookbook" class="tool-section page-hero">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">기능 3</span>
+          <h1>요리백과</h1>
+          <p>자취 요리, 집밥 메뉴, 냉장고 털이 레시피를 한곳에서 찾아보세요. 김치볶음밥, 부대찌개, 제육볶음, 계란요리처럼 집에서 자주 먹는 메뉴를 재료와 조리시간 기준으로 검색할 수 있습니다.</p>
+        </div>
+        <div class="cookbook-controls">
+          <input id="cookbookSearch" type="search" placeholder="요리명, 재료, 태그 검색">
+          <select id="cookbookFilter">
+            <option value="all">전체 레시피</option>
+            <option value="10분이내">10분 이내</option>
+            <option value="전자레인지가능">전자레인지 가능</option>
+            <option value="불안씀">불 안 씀</option>
+            <option value="한그릇">한 그릇</option>
+            <option value="아침식사">아침식사</option>
+            <option value="야식">야식</option>
+            <option value="술안주">술안주</option>
+          </select>
+          <select id="cookbookTypeFilter">
+            <option value="all">전체 타입</option>
+            <option value="덮밥/밥">덮밥/밥</option>
+            <option value="볶음밥">볶음밥</option>
+            <option value="국/찌개">국/찌개</option>
+            <option value="면/파스타">면/파스타</option>
+            <option value="볶음/조림">볶음/조림</option>
+            <option value="구이/부침">구이/부침</option>
+            <option value="토스트/빵">토스트/빵</option>
+            <option value="샐러드/무침">샐러드/무침</option>
+            <option value="반찬/간식">반찬/간식</option>
+          </select>
+        </div>
+        <div class="result-title-row cookbook-count-row">
+          <h2>레시피 목록</h2>
+          <span id="cookbookCount" class="count-pill">0</span>
+        </div>
+        <div id="cookbookResults" class="recipe-grid"></div>
+        <p id="cookbookEmpty" class="empty-message" hidden>조건에 맞는 레시피가 없습니다.</p>
+      </div>
+    </section>
+
+    <section class="about-section">
+      <div class="container about-panel">
+        <h2>많이 찾는 집밥 레시피</h2>
+        <ul>
+          <li>김치볶음밥, 계란간장밥, 참치마요덮밥처럼 빠르게 만드는 한 그릇 요리</li>
+          <li>부대찌개, 순두부찌개, 된장찌개처럼 집에서 자주 먹는 국물 요리</li>
+          <li>제육볶음, 두부김치, 어묵볶음처럼 밥과 함께 먹기 좋은 집밥 메뉴</li>
+          <li>계란찜, 김치전, 감자전처럼 자취생도 쉽게 만들 수 있는 간단 레시피</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="about-section">
+      <div class="container about-panel">
+        <h2>요리 종류별로 찾아보기</h2>
+        <ul>
+          <li>밥 요리와 덮밥: 남은 밥, 냉동밥, 계란, 참치캔으로 만드는 한 끼 메뉴</li>
+          <li>국과 찌개: 김치, 두부, 순두부, 스팸, 어묵을 활용한 따뜻한 집밥 메뉴</li>
+          <li>면 요리: 라면, 국수, 파스타면으로 만드는 야식과 간단 점심 메뉴</li>
+          <li>볶음과 반찬: 채소, 고기, 가공식품을 활용해 밥반찬으로 먹기 좋은 메뉴</li>
+        </ul>
+      </div>
+    </section>
+
+    <div id="recipeModal" class="modal-backdrop" hidden>
+      <article class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalRecipeTitle">
+        <button id="modalCloseBtn" class="modal-close" type="button" aria-label="상세 보기 닫기">닫기</button>
+        <div id="modalRecipeContent"></div>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span>© whatEat</span>
+      <nav aria-label="운영 안내">
+        <a href="privacy.html">개인정보처리방침</a>
+        <a href="terms.html">이용약관</a>
+        <a href="contact.html">문의</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="js/recipes.js"></script>
+  <script src="js/recipes-extra.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/cookbook.js"></script>
+</body>
+</html>

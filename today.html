@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="지금 먹고 싶은 상황을 고르면 오늘 먹기 좋은 메뉴를 추천합니다.">
+  <meta property="og:title" content="whatEat - 오늘의 메뉴 추천">
+  <meta property="og:description" content="지금 먹고 싶은 상황을 고르면 오늘 먹기 좋은 메뉴를 추천합니다.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://www.whateat.kr/images/31806508-742a-415a-adc9-778cb3718a38.jpg">
+  <meta property="og:image:alt" content="whatEat 로고">
+  <title>whatEat - 오늘의 메뉴 추천</title>
+  <link rel="icon" href="images/whatEat-logo-header-new.jpg" type="image/jpeg">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page-title="오늘의 메뉴 추천">
+  <header class="site-header">
+    <div class="container header-inner">
+      <a id="siteLogo" class="logo" href="index.html" aria-label="홈"></a>
+      <nav class="header-nav" aria-label="주요 기능">
+        <a href="fridge.html">냉장고 털이</a>
+        <a href="today.html" class="is-active">오늘의 메뉴 추천</a>
+        <a href="calorie.html">칼로리 계산기</a>
+        <a href="cookbook.html">요리백과</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="tool-section page-hero">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">기능 4</span>
+          <h1>오늘의 메뉴 추천</h1>
+          <p>지금 먹고 싶은 상황을 고르면, 오늘 먹기 좋은 메뉴를 골라드립니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="tool-section compact">
+      <div class="container">
+        <div class="survey-panel">
+          <div class="survey-grid" id="todaySurvey">
+            <div class="survey-group">
+              <h3>언제 먹나요?</h3>
+              <div class="button-cloud" data-group="mealTime"></div>
+            </div>
+            <div class="survey-group">
+              <h3>어떤 느낌인가요?</h3>
+              <div class="button-cloud" data-group="mood"></div>
+            </div>
+            <div class="survey-group">
+              <h3>조리 조건은?</h3>
+              <div class="button-cloud" data-group="condition"></div>
+            </div>
+            <div class="survey-group">
+              <h3>원하는 타입은?</h3>
+              <div class="button-cloud" data-group="recipeType"></div>
+            </div>
+            <div class="survey-group">
+              <h3>칼로리 느낌은?</h3>
+              <div class="button-cloud" data-group="calorie"></div>
+            </div>
+          </div>
+
+          <div class="survey-summary" aria-live="polite">
+            <div>
+              <span>선택한 조건</span>
+              <strong id="todaySelectedCount">0개</strong>
+            </div>
+            <div>
+              <span>추천 결과</span>
+              <strong id="todayResultCount">0개</strong>
+            </div>
+          </div>
+
+          <div class="action-row primary-actions today-actions">
+            <button id="todayRecommendBtn" class="utility-button accent" type="button">메뉴 추천받기</button>
+            <button id="todayResetBtn" class="utility-button subtle" type="button">다시 고르기</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="todayResultsSection" class="results-section">
+      <div class="container">
+        <div class="result-title-row">
+          <h2>오늘의 추천 메뉴</h2>
+          <span id="todayResultLabel" class="count-pill">0</span>
+        </div>
+        <div id="todayResults" class="recipe-grid"></div>
+        <p id="todayEmpty" class="empty-message">
+          조건을 고른 뒤 메뉴 추천받기를 눌러보세요.
+        </p>
+      </div>
+    </section>
+
+    <section class="about-section">
+      <div class="container about-panel">
+        <h2>시간대별 메뉴 추천</h2>
+        <ul class="article-link-list">
+          <li><a href="articles/breakfast-menu-recommendation.html">아침 메뉴 추천: 바쁜 아침에 먹기 좋은 간단한 메뉴</a></li>
+          <li><a href="articles/lunch-menu-recommendation.html">점심 메뉴 추천: 오늘 점심 뭐 먹지?</a></li>
+          <li><a href="articles/dinner-menu-recommendation.html">저녁 메뉴 추천: 집에서 먹기 좋은 오늘 저녁 메뉴</a></li>
+          <li><a href="articles/late-night-menu-recommendation.html">야식 메뉴 추천: 밤에 간단히 먹기 좋은 메뉴</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <div id="todayRecipeModal" class="modal-backdrop" hidden>
+      <article class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="todayModalTitle">
+        <button id="todayModalCloseBtn" class="modal-close" type="button" aria-label="상세 보기 닫기">닫기</button>
+        <div id="todayModalContent"></div>
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span>© whatEat</span>
+      <nav aria-label="운영 안내">
+        <a href="privacy.html">개인정보처리방침</a>
+        <a href="terms.html">이용약관</a>
+        <a href="contact.html">문의</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="js/recipes.js"></script>
+  <script src="js/recipes-extra.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/today.js"></script>
+</body>
+</html>
