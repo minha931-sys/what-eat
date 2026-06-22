@@ -448,7 +448,7 @@ button {
   box-shadow: var(--shadow);
 }
 
-.group-toggle {
+.group-title {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -462,13 +462,9 @@ button {
   text-align: left;
 }
 
-.group-toggle b {
+.group-title b {
   color: var(--muted);
   font-size: 0.84rem;
-}
-
-.ingredient-group.is-collapsed .button-cloud {
-  display: none;
 }
 
 .button-cloud,

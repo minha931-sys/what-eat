@@ -45,7 +45,6 @@ const calorieFilters = [
 const recipeTypeFilters = recipeTypeOrder.map((type) => ({ label: type, value: type }));
 const selectedIngredients = new Set(loadSavedIngredients());
 const selectedFilters = new Set();
-const collapsedGroups = new Set();
 let selectedCalorieFilter = "";
 let selectedRecipeType = "all";
 let selectedSort = "default";
@@ -134,9 +133,6 @@ function renderIngredientButtons() {
     button.addEventListener("click", () => toggleIngredient(button.dataset.ingredient, button));
   });
 
-  ingredientGroupsEl.querySelectorAll("[data-toggle-group]").forEach((button) => {
-    button.addEventListener("click", () => toggleIngredientGroup(button.dataset.toggleGroup));
-  });
 }
 
 function renderIngredientGroup(group) {
@@ -144,23 +140,16 @@ function renderIngredientGroup(group) {
   const filteredItems = query
     ? group.items.filter((item) => item.toLowerCase().includes(query))
     : group.items;
-  const isCollapsed = collapsedGroups.has(group.title) && query === "";
-
   if (filteredItems.length === 0) {
     return "";
   }
 
   return `
-    <article class="ingredient-group${isCollapsed ? " is-collapsed" : ""}">
-      <button
-        class="group-toggle"
-        type="button"
-        data-toggle-group="${group.title}"
-        aria-expanded="${!isCollapsed}"
-      >
+    <article class="ingredient-group">
+      <div class="group-title">
         <span>${group.title}</span>
         <b>${filteredItems.length}개</b>
-      </button>
+      </div>
       <div class="button-cloud">
         ${filteredItems.map((item) => `
           <button
@@ -173,16 +162,6 @@ function renderIngredientGroup(group) {
       </div>
     </article>
   `;
-}
-
-function toggleIngredientGroup(title) {
-  if (collapsedGroups.has(title)) {
-    collapsedGroups.delete(title);
-  } else {
-    collapsedGroups.add(title);
-  }
-
-  renderIngredientButtons();
 }
 
 function renderFilterButtons() {
